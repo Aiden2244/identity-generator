@@ -9,7 +9,7 @@ For this project, I used this file to eliminate the smallest and largest words f
 This creates usernames that are both interesting as well as within most character limits.
 '''
 
-INPUT_FILE = "words_alpha.txt"
+INPUT_FILE = "attributes/words_alpha.txt"
 UNAME_MIN = 6
 UNAME_MAX = 8
 PASS_MIN = 6

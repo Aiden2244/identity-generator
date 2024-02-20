@@ -21,8 +21,8 @@ def get_random_line(file_path):
 
 
 # Get names from first name and last name
-first = get_random_line("first-names.txt")
-last = get_random_line("last-names.txt")
+first = get_random_line("attributes/first-names.txt")
+last = get_random_line("attributes/last-names.txt")
 print("NAME:")
 print(first + " " + last)
 print()
@@ -55,7 +55,7 @@ else:
 
 # USERNAME GENERATION
 # get two random words from the uname_words.txt file
-uname = get_random_line("uname_words.txt") + get_random_line("uname_words.txt")
+uname = get_random_line("attributes/uname_words.txt") + get_random_line("attributes/uname_words.txt")
 
 # append a random number to the end of the name
 uname += str(random.randint(100, 999))
@@ -68,7 +68,7 @@ print()
 # generate a unique passphrase with the random words list
 passphrase = ""
 for i in range(PASSPHRASE_LENGTH):
-    passphrase += (get_random_line("pass_words.txt") + "-")
+    passphrase += (get_random_line("attributes/pass_words.txt") + "-")
 passphrase = passphrase[:len(passphrase) - 1]
 print("PASSPHRASE:")
 print(passphrase)
