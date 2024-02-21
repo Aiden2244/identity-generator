@@ -1,3 +1,7 @@
+'''
+setup.py
+'''
+
 from setuptools import setup, find_packages
 
 # Read requirements.txt and store its contents in a list
