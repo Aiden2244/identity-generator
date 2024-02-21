@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='new-alias',
-    version='1.0.0',
+    version='1.0.1',
     packages=find_packages(),
     install_requires=requirements,
     package_data={
