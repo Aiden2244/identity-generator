@@ -1,12 +1,16 @@
 '''
 text_filters.py
 
+Copyright (c) 2024 Aiden R. McCormack
+This file is a part of id-gen, released under the MIT License
+
 This file contains a function that, in the general case, parses a text file and eliminates all lines that are
 less than the MIN and greater than the MAX constants, inclusive. The result is a text file that contains only
 the lines whose length is in the range [MIN, MAX].
 
 For this project, I used this file to eliminate the smallest and largest words from the "words_alpha.txt" file.
 This creates usernames that are both interesting as well as within most character limits.
+
 '''
 
 # CONSTANTS FOR CONFIG (note while functions are general, the constants are for this specific use)
