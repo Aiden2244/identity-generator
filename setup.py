@@ -8,10 +8,10 @@ setup(
     name='idgen',
     version='0.1.0',
     packages=find_packages(),
-    install_requires=requirements,  # Use the list created from requirements.txt
+    install_requires=requirements,  
     entry_points={
         'console_scripts': [
-            'id-gen=my_package.main:main',  # "idgen" command will call main() in my_package/main.py
+            'id_gen=id_gen.main:main',  
         ],
     },
 )
