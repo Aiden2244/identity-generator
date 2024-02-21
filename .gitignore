@@ -5,3 +5,6 @@ dist/
 
 # Exclude Dockerfile
 Dockerfile
+
+# Exclude shell file for updating
+*.sh
