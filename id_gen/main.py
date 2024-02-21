@@ -1,6 +1,7 @@
 from random_address import *
 from typing import Dict
 import random
+import pkg_resources
 
 # CONSTANTS (will eventually replace with a real config file)
 PASSPHRASE_LENGTH = 6           # number of words to generate passphrase
@@ -12,18 +13,19 @@ CAPITALIZE_FIRST = True         # in the get_random_line() function, determines 
                                 # the first letter of the word will be capitalized
 
 # file sources for random generation
-FIRST_NAME_SOURCE = "./attributes/first-names.txt" 
-LAST_NAME_SOURCE = "./attributes/last-names.txt"
-USERNAME_SOURCE = "./attributes/uname_words.txt"
-PASSPHRASE_SOURCE = "./attributes/pass_words.txt"
+FIRST_NAME_SOURCE = "attributes/first-names.txt" 
+LAST_NAME_SOURCE = "attributes/last-names.txt"
+USERNAME_SOURCE = "attributes/uname_words.txt"
+PASSPHRASE_SOURCE = "attributes/pass_words.txt"
 
 # FUNCTIONS
 
 # READ RANDOM LINE
 # read a random line from a given file
 def get_random_line(file_path, capitalize=CAPITALIZE_FIRST):
+    resource_path = pkg_resources.resource_filename(__name__, file_path)
     try:
-        with open(file_path, 'r') as file:
+        with open(resource_path, 'r') as file:
             lines = file.readlines()
             random_line = random.choice(lines)
             
