@@ -2,9 +2,9 @@
 main.py
 
 Copyright (c) 2024 Aiden R. McCormack
-This file is a part of id-gen, released under the MIT License
+This file is a part of new-alias, released under the MIT License
 
-This file implements the main logic for id-gen. As I have plans to implement this program as a web
+This file implements the main logic for new-alias. As I have plans to implement this program as a web
 app or a Chrome extension, the code has been structured in a way where each individual step of the
 ID generation process is its own function, with its own respective print method.
 '''

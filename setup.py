@@ -13,11 +13,11 @@ setup(
     packages=find_packages(),
     install_requires=requirements,
     package_data={
-        'id_gen': ['attributes/*.txt'],
+        'new_alias': ['attributes/*.txt'],
     },  
     entry_points={
         'console_scripts': [
-            'new_alias=id_gen.main:main',  
+            'new_alias=new_alias.main:main',  
         ],
     },
     include_package_data=True,
