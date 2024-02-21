@@ -11,7 +11,7 @@ setup(
     install_requires=requirements,  # Use the list created from requirements.txt
     entry_points={
         'console_scripts': [
-            'idgen=my_package.main:main',  # "idgen" command will call main() in my_package/main.py
+            'id-gen=my_package.main:main',  # "idgen" command will call main() in my_package/main.py
         ],
     },
 )
