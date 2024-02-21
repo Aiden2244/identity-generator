@@ -17,7 +17,7 @@ and pkg-config on my Ubuntu system the first time I ran it, which I was able to 
 command "sudo apt install pkg-config libcairo2-dev". 
 
 After the package and any other essential binaries are installed, the program can be run on the
-command line by simply typing the package name "id-gen".
+command line by simply typing the package name "id_gen".
 
 ### Attributions
 
