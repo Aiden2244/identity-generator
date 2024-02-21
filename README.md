@@ -13,8 +13,10 @@ any particular individual or business.
 This program relies on some external data sources and libraries to work. They are as follows:
 * **Name Generation:** uses open source name files that can be found here: 
 https://gist.github.com/elifiner/cc90fdd387449158829515782936a9a4
-* **Username & Passphrase Generation:** uses an open source word dictionary that can be found here:
+* **Username Generation:** uses an open source word dictionary that can be found here:
 https://github.com/dwyl/english-words?search=1
+* **Passphrase Generation:** uses an open source text file of words that can be found here:
+https://gist.github.com/deekayen/4148741
 * **Address Generation:** uses the python library 'random-address', the documentation for which can be found here:
 https://pypi.org/project/random-address/
 'random-address' is available through the MIT License
