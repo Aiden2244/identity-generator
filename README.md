@@ -7,7 +7,7 @@
 Identity generator is an alias generator designed to protect online identity. It generates 
 plausible-sounding names, usernames, and passphrases, as well as real open addresses in the 
 United States that are not tied to any particular individual or business (made available
-through the OpenAddress project). 
+through the OpenAddress project - you can read more on them here: https://openaddresses.io/). 
 
 ### Installation and Usage
 
