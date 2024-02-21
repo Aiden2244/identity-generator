@@ -10,7 +10,7 @@ setup(
     packages=find_packages(),
     install_requires=requirements,
     package_data={
-        'id_gen:': ['attributes/*.txt'],
+        'id_gen': ['attributes/*.txt'],
     },  
     entry_points={
         'console_scripts': [

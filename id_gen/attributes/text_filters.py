@@ -1,5 +1,5 @@
 '''
-trim_words.py
+text_filters.py
 
 This file contains a function that, in the general case, parses a text file and eliminates all lines that are
 less than the MIN and greater than the MAX constants, inclusive. The result is a text file that contains only
