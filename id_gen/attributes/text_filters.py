@@ -44,7 +44,7 @@ def cut_file_by_line_number(input_file, output_file, line_no):
         
     with open(output_file, 'w') as file:
         file.writelines(filtered_lines)
-            
+
 
 def main():
     # idiotproof check
