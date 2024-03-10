@@ -13,21 +13,7 @@ from random_address import *
 from typing import Dict
 import random
 import pkg_resources
-
-# CONSTANTS (will eventually replace with a real config file)
-PASSPHRASE_LENGTH = 6           # number of words to generate passphrase
- 
-ADDY_STATE = "any"              # should the given address be for a specific state?
-AREA_CODE = "any"               # specifies an area code to generate for
-
-CAPITALIZE_FIRST = True         # in the get_random_line() function, determines whether 
-                                # the first letter of the word will be capitalized
-
-# file sources for random generation
-FIRST_NAME_SOURCE = "attributes/first-names.txt" 
-LAST_NAME_SOURCE = "attributes/last-names.txt"
-USERNAME_SOURCE = "attributes/uname_words.txt"
-PASSPHRASE_SOURCE = "attributes/pass_words.txt"
+import argparse
 
 # FUNCTIONS
 
@@ -52,9 +38,9 @@ def get_random_line(file_path, capitalize=CAPITALIZE_FIRST):
 
 
 # NAME GENERATION
-def generate_name(first_source=FIRST_NAME_SOURCE, last_source=LAST_NAME_SOURCE) -> Dict[str, str]:
-    fname = get_random_line(FIRST_NAME_SOURCE)
-    lname = get_random_line(LAST_NAME_SOURCE)
+def generate_name(first_source, last_source) -> Dict[str, str]:
+    fname = get_random_line(first_source)
+    lname = get_random_line(last_source)
     
     name = {"first": fname, "last": lname}
     
@@ -62,7 +48,7 @@ def generate_name(first_source=FIRST_NAME_SOURCE, last_source=LAST_NAME_SOURCE) 
 
 
 # ADDRESS GENERATION
-def generate_address(state=ADDY_STATE, zip=AREA_CODE) -> Dict[str, str]:
+def generate_address(state, zip) -> Dict[str, str]:
     if state != "any":
         state = state.upper()
         addy = real_random_address_by_state(state)
@@ -93,7 +79,7 @@ def generate_address(state=ADDY_STATE, zip=AREA_CODE) -> Dict[str, str]:
 
 
 # USERNAME GENERATION
-def generate_username(uname_source=USERNAME_SOURCE) -> str:
+def generate_username(uname_source) -> str:
     uname = get_random_line(uname_source) + get_random_line(uname_source)
 
     # append a random number to the end of the name
@@ -104,7 +90,7 @@ def generate_username(uname_source=USERNAME_SOURCE) -> str:
 
 
 # PASSPHRASE GENERATION
-def generate_passphrase(pass_source=PASSPHRASE_SOURCE, length=PASSPHRASE_LENGTH) -> str:
+def generate_passphrase(pass_source, length) -> str:
     passphrase = ""
     for i in range(length):
         passphrase += (get_random_line(pass_source) + "-")
@@ -153,12 +139,58 @@ def print_passphrase(pphrase):
     
 # EXECUTE CODE
 def main():
+
+
+    # CONSTANTS (will eventually replace with a real config file)
+    PASSPHRASE_LENGTH = 6           # number of words to generate passphrase
+    
+    ADDY_STATE = "any"              # should the given address be for a specific state?
+    AREA_CODE = "any"               # specifies an area code to generate for
+
+    CAPITALIZE_FIRST = True         # in the get_random_line() function, determines whether 
+                                    # the first letter of the word will be capitalized
+
+    # file sources for random generation
+    FIRST_NAME_SOURCE = "attributes/first-names.txt" 
+    LAST_NAME_SOURCE = "attributes/last-names.txt"
+    USERNAME_SOURCE = "attributes/uname_words.txt"
+    PASSPHRASE_SOURCE = "attributes/pass_words.txt"
+
+    # handle command line arguments
+    parser = argparse.ArgumentParser(description='Generate alias with optional state.')
+
+    # state argument
+    parser.add_argument(
+        '--state', 
+        '-s', 
+        help='Set the desired state for address generation (for sales tax purposes)', 
+        type=str
+    )
+
+    # zip code argument
+    parser.add_argument(
+        '--zip', 
+        '-z', 
+        help='Set the desired zip code for address generation', 
+        type=str
+    )
+    
+    args = parser.parse_args()
+
+     # overwrite ADDY_STATE if --state is provided
+    if args.state:
+        ADDY_STATE = args.state
+    
+    if args.zip:
+        AREA_CODE = args.zip
+
+
     print("Generating alias...\n")
     # generate alias
-    name = generate_name()
-    addy = generate_address()
-    uname = generate_username()
-    pphrase = generate_passphrase()
+    name = generate_name(first_source=FIRST_NAME_SOURCE, last_source=LAST_NAME_SOURCE)
+    addy = generate_address(state=ADDY_STATE, zip=AREA_CODE)
+    uname = generate_username(uname_source=USERNAME_SOURCE)
+    pphrase = generate_passphrase(pass_source=PASSPHRASE_SOURCE, length=PASSPHRASE_LENGTH)
     
     # print alias to user
     print_name(name)

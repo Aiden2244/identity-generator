@@ -8,3 +8,6 @@ Dockerfile
 
 # Exclude shell file for updating
 *.sh
+
+# Exclude test environment
+test-env/
