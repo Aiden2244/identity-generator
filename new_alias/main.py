@@ -9,11 +9,20 @@ app or a Chrome extension, the code has been structured in a way where each indi
 ID generation process is its own function, with its own respective print method.
 '''
 
+# IMPORTS
 from random_address import *
 from typing import Dict
 import random
 import pkg_resources
 import argparse
+
+# EXCEPTION CLASS FOR INVALID ARGUMENT
+class InvalidArgument(Exception):
+    pass
+
+# CONSTANTS (will eventually replace with a real config file)
+CAPITALIZE_FIRST = True         # in the get_random_line() function, determines whether 
+
 
 # FUNCTIONS
 
@@ -53,29 +62,20 @@ def generate_address(state, zip) -> Dict[str, str]:
         state = state.upper()
         addy = real_random_address_by_state(state)
         if addy == {}:
-            print("ERROR: Invalid value for State:")
-            print("State cannot be \'" + state + "\'")
-            print("Skipping address generation\n")
-            return False
+            raise InvalidArgument(f"Invalid value for State: {state}")
             
     elif zip != "any":
         addy = real_random_address_by_postal_code(zip)
         if addy == {}:
-            print("ERROR: Invalid value for zip code:")
-            print("Zip Code cannot be \'" + zip + "\'")
-            print("Skipping address generation\n")
-            return False
+            raise InvalidArgument(f"Invalid value for Zip Code: {zip}")
     else:
         addy = real_random_address()
         
     
-    if addy != {}:
-        return addy
+    if addy == {}:
+        raise InvalidArgument("Bad Address")
         
-    else:
-        print("ERROR: Invalid Address")
-        print("Skipping address generation\n")
-        return False
+    return addy
 
 
 # USERNAME GENERATION
@@ -140,63 +140,75 @@ def print_passphrase(pphrase):
 # EXECUTE CODE
 def main():
 
-
-    # CONSTANTS (will eventually replace with a real config file)
-    PASSPHRASE_LENGTH = 6           # number of words to generate passphrase
-    
-    ADDY_STATE = "any"              # should the given address be for a specific state?
-    AREA_CODE = "any"               # specifies an area code to generate for
-
-    CAPITALIZE_FIRST = True         # in the get_random_line() function, determines whether 
-                                    # the first letter of the word will be capitalized
-
-    # file sources for random generation
-    FIRST_NAME_SOURCE = "attributes/first-names.txt" 
-    LAST_NAME_SOURCE = "attributes/last-names.txt"
-    USERNAME_SOURCE = "attributes/uname_words.txt"
-    PASSPHRASE_SOURCE = "attributes/pass_words.txt"
-
     # handle command line arguments
-    parser = argparse.ArgumentParser(description='Generate alias with optional state.')
+    parser = argparse.ArgumentParser(
+        prog='new_alias',
+        description='Generate alias for online privacy and anonymity.'
+    )
 
     # state argument
     parser.add_argument(
         '--state', 
-        '-s', 
-        help='Set the desired state for address generation (for sales tax purposes)', 
-        type=str
+        '-s',
+        dest='state',
+        action='store',
+        default='any',  
+        help='Set the desired state for address generation', 
     )
 
     # zip code argument
     parser.add_argument(
         '--zip', 
-        '-z', 
+        '-z',
+        dest='zip',
+        action='store',
+        default='any',
         help='Set the desired zip code for address generation', 
-        type=str
+    )
+
+    # passphrase length argument
+    parser.add_argument(
+        '--pass-length', 
+        '-p',
+        dest='pass_length',
+        action='store',
+        type=int,
+        choices=range(3, 50),
+        default=6,
+        help='Set the desired zip code for address generation', 
     )
     
     args = parser.parse_args()
 
-     # overwrite ADDY_STATE if --state is provided
-    if args.state:
-        ADDY_STATE = args.state
-    
-    if args.zip:
-        AREA_CODE = args.zip
+    # VARIABLES FOR GENERATION FINE TUNING
+    ADDY_STATE = args.state                 # state to generate address in, default 'any'
+    AREA_CODE = args.zip                    # area code to generate address in, default 'any'
 
-
-    print("Generating alias...\n")
-    # generate alias
-    name = generate_name(first_source=FIRST_NAME_SOURCE, last_source=LAST_NAME_SOURCE)
-    addy = generate_address(state=ADDY_STATE, zip=AREA_CODE)
-    uname = generate_username(uname_source=USERNAME_SOURCE)
-    pphrase = generate_passphrase(pass_source=PASSPHRASE_SOURCE, length=PASSPHRASE_LENGTH)
+    PASSPHRASE_LENGTH = args.pass_length    # number of words to generate passphrase, default 6
     
-    # print alias to user
-    print_name(name)
-    print_address(addy)
-    print_username(uname)
-    print_passphrase(pphrase)
+    # FILE SOURCES FOR RANDOM GENERATION
+    FIRST_NAME_SOURCE = "attributes/first-names.txt" 
+    LAST_NAME_SOURCE = "attributes/last-names.txt"
+    USERNAME_SOURCE = "attributes/uname_words.txt"
+    PASSPHRASE_SOURCE = "attributes/pass_words.txt"
+    
+    try:
+
+        print("Generating alias...\n")
+        # generate alias
+        name = generate_name(first_source=FIRST_NAME_SOURCE, last_source=LAST_NAME_SOURCE)
+        addy = generate_address(state=ADDY_STATE, zip=AREA_CODE)
+        uname = generate_username(uname_source=USERNAME_SOURCE)
+        pphrase = generate_passphrase(pass_source=PASSPHRASE_SOURCE, length=PASSPHRASE_LENGTH)
+        
+        # print alias to user
+        print_name(name)
+        print_address(addy)
+        print_username(uname)
+        print_passphrase(pphrase)
+    
+    except InvalidArgument as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     main()
