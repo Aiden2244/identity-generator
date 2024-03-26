@@ -9,19 +9,19 @@ with open('requirements.txt') as f:
 
 setup(
     name='new-alias',
-    version='1.1.0',
+    version='0.3.0',
     packages=find_packages(),
     install_requires=requirements,
     package_data={
         'new_alias': ['attributes/*.txt'],
-    },  
+    },
     entry_points={
         'console_scripts': [
-            'new_alias=new_alias.main:main',  
+            'new_alias=new_alias.main:main',
         ],
     },
     include_package_data=True,
-    
+
     author='Aiden R. McCormack',
     author_email='aidenm2244@proton.me',
     description='An alias generator for online privacy protection',
@@ -34,4 +34,3 @@ setup(
         'Operating System :: OS Independent',
     ],
 )
-
