@@ -10,7 +10,7 @@ ID generation process is its own function, with its own respective print method.
 '''
 
 # IMPORTS
-from random_address import *
+from random_address import real_random_address, real_random_address_by_state, real_random_address_by_postal_code
 from typing import Dict
 import random
 import pkg_resources
@@ -48,13 +48,10 @@ def get_random_line(file_path, capitalize=CAPITALIZE_FIRST):
 
 # NAME GENERATION
 def generate_name(first_source, last_source) -> Dict[str, str]:
-    fname = get_random_line(first_source)
-    lname = get_random_line(last_source)
-
+    fname = str(get_random_line(first_source))
+    lname = str(get_random_line(last_source))
     name = {"first": fname, "last": lname}
-
     return name
-
 
 # ADDRESS GENERATION
 def generate_address(state, zip) -> Dict[str, str]:
@@ -71,7 +68,6 @@ def generate_address(state, zip) -> Dict[str, str]:
     else:
         addy = real_random_address()
 
-
     if addy == {}:
         raise InvalidArgument("Bad Address")
 
@@ -80,20 +76,17 @@ def generate_address(state, zip) -> Dict[str, str]:
 
 # USERNAME GENERATION
 def generate_username(uname_source) -> str:
-    uname = get_random_line(uname_source) + get_random_line(uname_source)
+    uname = str(get_random_line(uname_source)) + str(get_random_line(uname_source))
 
     # append a random number to the end of the name
     uname += str(random.randint(100, 999))
-
     return uname
-
-
 
 # PASSPHRASE GENERATION
 def generate_passphrase(pass_source, length) -> str:
     passphrase = ""
     for i in range(length):
-        passphrase += (get_random_line(pass_source) + "-")
+        passphrase += (str(get_random_line(pass_source)) + "-")
     passphrase = passphrase[:len(passphrase) - 1]
 
     return passphrase
@@ -137,9 +130,8 @@ def print_passphrase(pphrase):
     print()
 
 
-# EXECUTE CODE
-def main():
-
+# PARSE ARGUMENTS
+def handleArguments():
     # handle command line arguments
     parser = argparse.ArgumentParser(
         prog='new_alias',
@@ -178,7 +170,12 @@ def main():
         help='Set the desired zip code for address generation',
     )
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+# EXECUTE CODE
+def main():
+
+    args = handleArguments()
 
     # VARIABLES FOR GENERATION FINE TUNING
     ADDY_STATE = args.state                 # state to generate address in, default 'any'
